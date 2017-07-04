@@ -5,11 +5,12 @@
 
 # Import parser to start execution
 from EventsYacc import parser
+from getpass import _raw_input
 
 def main():
     while True:
         try:
-            s = raw_input('Events > ')
+            s = _raw_input('Events > ')
         except EOFError:
             break
         if s == 'quit': break

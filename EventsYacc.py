@@ -23,7 +23,7 @@ def p_statement(p):
 #   When invoking add(), make sure to pass down arguments
 #   in the correct order of event, date, time.
 def p_statement_add(p):
-    '''statement_view : statement_add_edt
+    '''statement_add : statement_add_edt
                            | statement_add_ed
                            | statement_add_e
                            | ADD'''
@@ -61,7 +61,7 @@ def p_statement_remove(p):
 #   When invoking edit(), make sure to pass down arguments
 #   in the correct order of event, date, time.
 def p_statement_edit(p):
-    '''statement_view : statement_edit_edt
+    '''statement_edit : statement_edit_edt
                            | statement_edit_ed
                            | statement_edit_et
                            | EDIT'''
@@ -161,3 +161,4 @@ def p_error(p):
 
 # Build the parser
 parser = yacc.yacc()
+

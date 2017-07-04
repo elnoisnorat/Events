@@ -1,8 +1,9 @@
 '''
 EventsTools.py
 '''
-import pickle
-import calendar 
+import pickle, pprint
+import calendar
+import datetime
 from getpass import _raw_input
 
 
@@ -12,7 +13,7 @@ class Events:
         self.date = date
         self.time = time
         self.status = status
-        
+    
     def set_name(self, name):
         self.name = name
         
@@ -38,66 +39,133 @@ class Events:
         return self.status    
 
 
+#username = 'guest'
 username = ''
 username = _raw_input('Enter a username: ')
-with open('Users.txt') as usersfile:
-    for e in usersfile:
-        if username in e:#ok
-            output = open(username+'.txt', 'r')
-        else:#crea nuevo
-            print('Crear nuevo....')
+try:
+    userfile = open(username+'.pkl', 'rb')
+    try:
+        eventsList = pickle.load(userfile)
+    except EOFError:
+        eventsList = []
+except FileNotFoundError:
+    userfile = open(username+'.pkl', 'wb')
+    eventsList = []
+    
+userfile.close()
 
 
-eventsList =  []
-eventsList.append(eventsList)
-
-
-pickle.dump(Events, output)
-pickle.dump(eventsList, output)
-
-output.close()
-
-ev = Events()
 
 def add(event, date, time):
-    
+    now = datetime.datetime.now()
     if event == None :
         event = 'Untitled event'
     if date == None:
-        date = date.today() 
+        date = []
+        date.append(str(now.day)+'/'+str(now.month)+'/'+str(now.year))
+    #else: # check if valid date
+    if time == None:
+        time = []
+        time.append(str(now.hour)+':'+str(now.minute))
+    #else: # check if valid time
     
-    if  calendar.weekday(date[0] + date[1], date[3] + date[4], date[6] +date[7]) != None:   #check if valid date? no se si funciona esto
-        ev = Events(event, date, time, None)
-        eventsList.append(ev)
-    else:
-        print('Invalid date')
-   
-   
+
+    ev = Events(event, date, time, ' ')
+    eventsList.append(ev)   
+    savefile = open(username+'.pkl', 'wb')
+    pickle.dump(eventsList, savefile)
+    savefile.close()
     
 def remove(event):
-    if eventsList.__getattribute__(event) != None :
-        eventsList.remove(event)
-    else:
-        print('Event is not in the list')
+    if event == None :
+        print('remove: Invalid operation. Must enter event name ')
+        return
+
+    for e in eventsList:
+        if e.get_name() == event:
+            eventsList.remove(e)
+            savefile = open(username+'.pkl', 'wb')
+            pickle.dump(eventsList, savefile)
+            savefile.close()
+            
     
     
 def edit(event, date, time):    
-    eventsList.__getattribute__(event).set_date(date)
-    eventsList.__getattribute__(event).set_time(time)
+    if event == None :
+        print('edit: Invalid operation. Must enter event name')
+        return
 
-def view(event, date, time):
+    now = datetime.datetime.now()
+    if date == None:
+        date = []
+        date.append(str(now.day)+'/'+str(now.month)+'/'+str(now.year))
+    if time == None:
+        time = []
+        time.append(str(now.hour)+':'+str(now.minute))
+
+    for e in eventsList:
+        if e.get_name() == event:
+            e.set_date(date)
+            e.set_time(time)
+            savefile = open(username+'.pkl', 'wb')
+            pickle.dump(eventsList, savefile)
+            savefile.close()
+            
+#or VIEW
+def available(event, date, time):
     res = ''
-    if date != None:
-        res = res +'----- '+ eventsList.__getattribute__(event).get_date() +' -----\n'
-    if event != None :
-        res = res + event
-    if time != None:
-        res = res +' ('+ eventsList.__getattribute__(event).get_time() +') '
+    if event == None and date !=None:
+        res = res + '-------------------Events with date '+date+':-----------------\n'
+        for e in eventsList:
+            if e.get_date() == date:       
+                res = res +'----- '+ str(e.get_date()) +'----\n'
+                res = res +' '+ e.get_name() +' '
+                res = res +' ('+ str(e.get_time())+') '
+                res = res +' -  '+ e.get_status()+'\n'
     
-    res = res +' - :'+ eventsList.__getattribute__(event).get_status()
+    elif event == None and time !=None:
+        res = res + '-------------------Events with time '+time+':-----------------\n'
+        for e in eventsList:
+            if e.get_time() == time:
+                res = res +'----- '+ str(e.get_date()) +'----\n'
+                res = res +' '+ e.get_name() +' '
+                res = res +' ('+ str(e.get_time())+') '
+                res = res +' -  '+ e.get_status()+'\n'
+
+    elif event == None :
+        res = res + '-------------------All Events:-----------------\n'
+        for e in eventsList:
+            res = res +'----- '+ str(e.get_date()) +'----\n'
+            res = res +' '+ e.get_name() +' '
+            res = res +' ('+ str(e.get_time())+') '
+            res = res +' - '+ e.get_status()+'\n'
+    else:
+        res = res + '-------------------Events with name '+event+':-----------------\n'
+        for e in eventsList:
+            if e.get_name() == event:
+                res = res +'----- '+ str(e.get_date()) +'----\n'
+                res = res +' '+ e.get_name() +' '
+                res = res +' ('+ str(e.get_time())+') '
+                res = res +' -  '+ e.get_status()+'\n'
+                
     return res
 
     
 def mark(event, status):
-    eventsList.__getattribute__(event).set_status(status) 
-    # or eventsList.__getattribute__(event).set_status('Done')
+    if event == None :
+        print('mark: Invalid operation. Must enter event name ')
+        return
+
+    if status == None:
+        status = 'Done'
+
+    for e in eventsList:
+        if e.get_name() == event:
+            e.set_status(status)
+            savefile = open(username+'.pkl', 'wb')
+            pickle.dump(eventsList, savefile)
+            savefile.close()
+            
+            
+        
+     

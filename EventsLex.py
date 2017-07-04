@@ -21,8 +21,8 @@ tokens = [
 ] + list(reserved.values())
 
 # Regular expression rules for simple tokens
-t_EVENT = r'[a-zA-Z]'
-t_STATUS = r'[a-zA-Z]'
+t_EVENT = r'[a-zA-Z_]'
+t_STATUS = r'[a-zA-Z_]'
 t_DATE = r'[0-9]{2}'+r'/'+r'[0-9]{2}'+r'/'+r'[0-9]{2}'
 t_TIME = r'[0-9]{2}'+r':'+r'[0-9]{2}'
 
