@@ -9,21 +9,27 @@ Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://j
 Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
 ```markdown
-Syntax highlighted code block
+To add an event: 
 
-# Header 1
-## Header 2
-### Header 3
+add ​evento 01/01/17 01:35
+add ​fiesta 03/07/17
+add ​viaje
 
-- Bulleted
-- List
+To edit events:
 
-1. Numbered
-2. List
+edit ​evento 12:12
+remove ​fiesta
+mark ​evento Done
 
-**Bold** and _Italic_ and `Code` text
+View events:
 
-[Link](url) and ![Image](src)
+view ​evento
+
+Output:
+
+---------01/01/17-----------
+
+evento (12:12) - Done
 ```
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
