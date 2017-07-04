@@ -1,12 +1,6 @@
 # About
 Évents is a scripting language that allows you to schedule or manage your events in just one line. It was motivated by other similar applications with the purpose to make the process more easy by using simple commands and parameters, very similar to a human language.
 
-### Language Features
-
-```markdown
-
-
-```
 
 
 ### Language Tutorial
