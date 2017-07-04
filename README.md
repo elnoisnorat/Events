@@ -1,12 +1,15 @@
-## Welcome to GitHub Pages
+# About
+Évents is a scripting language that allows you to schedule or manage your events in just one line. It was motivated by other similar applications with the purpose to make the process more easy by using simple commands and parameters, very similar to a human language.
 
-You can use the [editor on GitHub](https://github.com/elnoisnorat/Events-ProgrammingLanguageProject/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+### Language Features
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+```markdown
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+```
+
+
+### Language Example
 
 ```markdown
 To add an event: 
